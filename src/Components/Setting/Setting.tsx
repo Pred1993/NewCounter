@@ -19,10 +19,12 @@ export const Setting = ({setDisabled, disabled, errorStartValue, startValue, set
     const onClickHandlerSetMax = (value: number) => {
         setMaxValue(value)
         setDisabled(false)
+        setText("enter values and press 'set'")
     }
     const onClickHandlerSetStart = (value: number) => {
         setStartValue(value)
         setDisabled(false)
+        setText("enter values and press 'set'")
     }
     const onClickHandlerSet = () => {
         setText(null)

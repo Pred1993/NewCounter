@@ -9,7 +9,7 @@ function App() {
     const [counter, setCounter] = useState<number>(startValue)
     const [errorMaxValue, setErrorMaxValue] = useState<string>('')
     const [errorStartValue, setErrorStartValue] = useState<string>('')
-    const [text, setText] = useState<string | null>(null)
+    const [text, setText] = useState<string | null>("enter values and press 'set'")
     const [disabled, setDisabled] = useState<boolean>(true)
 
     useEffect(() => {
@@ -26,17 +26,14 @@ function App() {
         }
     }, [])
     useEffect(() => {
-        if (maxValue < 0 || maxValue <= startValue) {
-            setText("enter values and press 'set'")
+        if (maxValue < 0 || maxValue < startValue) {
             setErrorMaxValue('Incorrect value')
-        } else {
-            setErrorMaxValue('')
             setErrorStartValue('')
-        }
-    }, [maxValue, startValue])
-
-    useEffect(() => {
-        if (startValue < 0 || maxValue <= startValue) {
+        } else if (startValue < 0) {
+            setErrorStartValue('Incorrect value')
+            setErrorMaxValue('')
+        } else if (maxValue === startValue) {
+            setErrorMaxValue('Incorrect value')
             setErrorStartValue('Incorrect value')
         } else {
             setErrorStartValue('')
