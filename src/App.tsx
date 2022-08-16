@@ -1,80 +1,79 @@
-import React, {useEffect, useState} from 'react';
-import s from './App.module.css'
-import {Counter} from "./Components/Counter/Counter";
-import {Setting} from "./Components/Setting/Setting";
+import { useEffect, useState } from 'react';
 
-function App() {
-    const [maxValue, setMaxValue] = useState<number>(5)
-    const [startValue, setStartValue] = useState<number>(0)
-    const [counter, setCounter] = useState<number>(startValue)
-    const [errorMaxValue, setErrorMaxValue] = useState<string>('')
-    const [errorStartValue, setErrorStartValue] = useState<string>('')
-    const [text, setText] = useState<string | null>("enter values and press 'set'")
-    const [disabled, setDisabled] = useState<boolean>(true)
+import { Counter } from './Components/Counter/Counter';
+import { Setting } from './Components/Setting/Setting';
 
-    useEffect(() => {
-        let getStartValue = localStorage.getItem('start-Value')
-        if (getStartValue) {
-            let newStartValue = JSON.parse(getStartValue)
-            setCounter(newStartValue)
-            setStartValue(newStartValue)
-        }
-        let getMaxValue = localStorage.getItem('max-Value')
-        if (getMaxValue) {
-            let newMaxValue = JSON.parse(getMaxValue)
-            setMaxValue(newMaxValue)
-        }
-    }, [])
-    useEffect(() => {
-        if (maxValue < 0 || maxValue < startValue) {
-            setErrorMaxValue('Incorrect value')
-            setErrorStartValue('')
-        } else if (startValue < 0) {
-            setErrorStartValue('Incorrect value')
-            setErrorMaxValue('')
-        } else if (maxValue === startValue) {
-            setErrorMaxValue('Incorrect value')
-            setErrorStartValue('Incorrect value')
-        } else {
-            setErrorStartValue('')
-            setErrorMaxValue('')
-        }
-    }, [maxValue, startValue])
+import styles from './App.module.css';
 
-    const changeCounter = () => {
-        let getStartValue = localStorage.getItem('start-Value')
-        if (getStartValue) {
-            let newStartValue = JSON.parse(getStartValue)
-            setCounter(newStartValue)
-        }
+export const App = () => {
+  const [maxValue, setMaxValue] = useState<number>(5);
+  const [startValue, setStartValue] = useState<number>(0);
+  const [counter, setCounter] = useState<number>(startValue);
+  const [errorMaxValue, setErrorMaxValue] = useState<string>('');
+  const [errorStartValue, setErrorStartValue] = useState<string>('');
+  const [text, setText] = useState<string | null>("enter values and press 'set'");
+  const [disabled, setDisabled] = useState(false);
+
+  useEffect(() => {
+    const getStartValue = localStorage.getItem('start-Value');
+    const getMaxValue = localStorage.getItem('max-Value');
+
+    if (getStartValue && getMaxValue) {
+      setMaxValue(JSON.parse(getMaxValue));
+      setCounter(JSON.parse(getStartValue));
+      setStartValue(JSON.parse(getStartValue));
     }
-    return (
-        <div className={s.screen}>
-            <div className={s.column}>
-                <Setting
-                    setMaxValue={setMaxValue}
-                    setStartValue={setStartValue}
-                    maxValue={maxValue}
-                    startValue={startValue}
-                    changeCounter={changeCounter}
-                    errorMaxValue={errorMaxValue}
-                    errorStartValue={errorStartValue}
-                    setText={setText}
-                    disabled={disabled}
-                    setDisabled={setDisabled}
-                />
-                <Counter
-                    counter={counter}
-                    setCounter={setCounter}
-                    maxValue={maxValue}
-                    errorMaxValue={errorMaxValue}
-                    errorStartValue={errorStartValue}
-                    text={text}
-                    disabled={!disabled}
-                /></div>
-        </div>
+  }, []);
 
-    );
-}
+  useEffect(() => {
+    if (maxValue < 0 || maxValue < startValue) {
+      setErrorMaxValue('Incorrect value');
+      setErrorStartValue('');
+    } else if (startValue < 0) {
+      setErrorStartValue('Incorrect value');
+      setErrorMaxValue('');
+    } else if (maxValue === startValue) {
+      setErrorMaxValue('Incorrect value');
+      setErrorStartValue('Incorrect value');
+    } else {
+      setErrorStartValue('');
+      setErrorMaxValue('');
+    }
+  }, [maxValue, startValue]);
 
-export default App;
+  const changeCounter = () => {
+    const getStartValue = localStorage.getItem('start-Value');
+
+    if (getStartValue) {
+      setCounter(JSON.parse(getStartValue));
+    }
+  };
+
+  return (
+    <div className={styles.screen}>
+      <div className={styles.column}>
+        <Setting
+          setMaxValue={setMaxValue}
+          setStartValue={setStartValue}
+          maxValue={maxValue}
+          startValue={startValue}
+          changeCounter={changeCounter}
+          errorMaxValue={errorMaxValue}
+          errorStartValue={errorStartValue}
+          setText={setText}
+          disabled={disabled}
+          setDisabled={setDisabled}
+        />
+        <Counter
+          counter={counter}
+          setCounter={setCounter}
+          maxValue={maxValue}
+          errorMaxValue={errorMaxValue}
+          errorStartValue={errorStartValue}
+          text={text}
+          disabled={!disabled}
+        />
+      </div>
+    </div>
+  );
+};

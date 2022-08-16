@@ -1,39 +1,38 @@
-import React from 'react';
-import s from './Counter.module.css'
-import SuperButton from "../Common/SuperButton/SuperButton";
+import { SuperButton } from '../Common';
+import styles from './Counter.module.css';
 
-export type CounterPropsType = {
-    counter: number
-    setCounter: (count: number) => void
-    maxValue: number
-    errorMaxValue: string
-    errorStartValue: string
-    text: string | null
-    disabled: boolean
-}
-export const Counter = ({counter, setCounter, errorStartValue, errorMaxValue, maxValue, text, disabled}: CounterPropsType) => {
-    return (
-        <div>
-            <div className={s.counter}>
-                <div className={counter === maxValue ? s.Count : s.Count1}>{errorMaxValue || errorStartValue
-                    ? <span className={s.error}>Incorrect value</span>
-                    : text ? <span className={s.text}>{text}</span> : counter }
-                </div>
-                <div className={s.buttons}>
-                    <SuperButton
-                        disabled={counter === maxValue || disabled} onClick={() => setCounter(counter + 1)}
-                    >
-                        inc
-                    </SuperButton>
-                    <SuperButton
-                        disabled={counter === 0 || disabled}
-                        onClick={() => setCounter(0)}
-                    >
-                        reset
-                    </SuperButton>
-                </div>
-            </div>
-        </div>
+export type Props = {
+  counter: number;
+  setCounter: (count: number) => void;
+  maxValue: number;
+  errorMaxValue: string;
+  errorStartValue: string;
+  text: string | null;
+  disabled: boolean;
+};
 
-    )
-}
+export const Counter = ({ counter, setCounter, errorStartValue, errorMaxValue, maxValue, text, disabled }: Props) => {
+  const counterClasses = counter === maxValue ? styles.countMax : styles.count;
+
+  return (
+    <div className={styles.counter}>
+      <div className={counterClasses}>
+        {errorMaxValue || errorStartValue ? (
+          <span className={styles.error}>Incorrect value</span>
+        ) : text ? (
+          <span className={styles.text}>{text}</span>
+        ) : (
+          counter
+        )}
+      </div>
+      <div className={styles.buttons}>
+        <SuperButton disabled={counter === maxValue || disabled} onClick={() => setCounter(counter + 1)}>
+          inc
+        </SuperButton>
+        <SuperButton disabled={counter === 0 || disabled} onClick={() => setCounter(0)}>
+          reset
+        </SuperButton>
+      </div>
+    </div>
+  );
+};

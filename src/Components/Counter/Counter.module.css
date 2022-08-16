@@ -9,7 +9,7 @@
     margin: auto;
 }
 
-.Count {
+.countMax {
     background-color: #63dafc;
     border-radius: 10px;
     font-size: 60px;
@@ -20,7 +20,7 @@
     text-align: center;
 }
 
-.Count1 {
+.count {
     background-color: #63dafc;
     border-radius: 10px;
     font-size: 60px;
