@@ -11,9 +11,7 @@ export const App = () => {
   const [counter, setCounter] = useState<number>(startValue);
   const [errorMaxValue, setErrorMaxValue] = useState<string>('');
   const [errorStartValue, setErrorStartValue] = useState<string>('');
-  const [text, setText] = useState<string | null>("enter values and press 'set'");
   const [disabled, setDisabled] = useState(false);
-
   useEffect(() => {
     const getStartValue = localStorage.getItem('start-Value');
     const getMaxValue = localStorage.getItem('max-Value');
@@ -40,7 +38,6 @@ export const App = () => {
       setErrorMaxValue('');
     }
   }, [maxValue, startValue]);
-
   const changeCounter = () => {
     const getStartValue = localStorage.getItem('start-Value');
 
@@ -60,7 +57,6 @@ export const App = () => {
           changeCounter={changeCounter}
           errorMaxValue={errorMaxValue}
           errorStartValue={errorStartValue}
-          setText={setText}
           disabled={disabled}
           setDisabled={setDisabled}
         />
@@ -70,7 +66,6 @@ export const App = () => {
           maxValue={maxValue}
           errorMaxValue={errorMaxValue}
           errorStartValue={errorStartValue}
-          text={text}
           disabled={!disabled}
         />
       </div>

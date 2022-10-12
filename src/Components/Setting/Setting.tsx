@@ -10,7 +10,6 @@ export type Props = {
   changeCounter: () => void;
   errorMaxValue: string | null;
   errorStartValue: string | null;
-  setText: (text: string | null) => void;
   disabled: boolean;
   setDisabled: (disabled: boolean) => void;
 };
@@ -26,22 +25,26 @@ export const Setting = memo(
     maxValue,
     errorMaxValue,
     changeCounter,
-    setText,
   }: Props) => {
     const onClickHandlerSetMax = (value: number) => {
-      setMaxValue(value);
-      setDisabled(false);
-      setText("enter values and press 'set'");
+      if (Number.isNaN(value)) {
+        return;
+      } else {
+        setMaxValue(value);
+        setDisabled(false);
+      }
     };
 
     const onClickHandlerSetStart = (value: number) => {
-      setStartValue(value);
-      setDisabled(false);
-      setText("enter values and press 'set'");
+      if (Number.isNaN(value)) {
+        return;
+      } else {
+        setStartValue(value);
+        setDisabled(false);
+      }
     };
 
     const onClickHandlerSet = () => {
-      setText(null);
       localStorage.setItem('max-Value', JSON.stringify(maxValue));
       localStorage.setItem('start-Value', JSON.stringify(startValue));
       setDisabled(true);
