@@ -1,5 +1,6 @@
 import {
   counterReducer,
+  incCounterAC,
   InitialStateType,
   setCounterAC,
   setDisabledAC,
@@ -49,4 +50,9 @@ test('property errorStartValue should be change', () => {
 test('property disabled should be change', () => {
   const endState = counterReducer(startState, setDisabledAC(true));
   expect(endState.disabled).toBe(true);
+});
+
+test('property counter should be change to 1 ', () => {
+  const endState = counterReducer(startState, incCounterAC());
+  expect(endState.counter).toBe(1);
 });

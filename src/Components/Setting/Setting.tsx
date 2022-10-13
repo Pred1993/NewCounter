@@ -4,10 +4,10 @@ import { memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType, AppThunkType } from '../../bll/store';
 import {
+  setCounterAC,
   setDisabledAC,
   setErrorMaxValueAC,
   setErrorStartValueAC,
-  setInLocalStorageTC,
   setMaxValueAC,
   setStartValueAC,
 } from '../../bll/counterReducer';
@@ -19,7 +19,7 @@ export const Setting = memo(() => {
   const errorStartValue = useSelector<AppRootStateType, string>((state) => state.counter.errorStartValue);
   const errorMaxValue = useSelector<AppRootStateType, string>((state) => state.counter.errorMaxValue);
   const dispatch = useDispatch<AppThunkType>();
-
+  // Отлавливаю ошибки в maxValue, startValue
   useEffect(() => {
     if (maxValue < 0 || maxValue < startValue) {
       dispatch(setErrorMaxValueAC('Incorrect value'));
@@ -37,7 +37,7 @@ export const Setting = memo(() => {
       dispatch(setErrorMaxValueAC(''));
     }
   }, [maxValue, startValue]);
-
+  // Изменение значений maxValue
   const onClickHandlerSetMax = (value: number) => {
     if (Number.isNaN(value)) {
       return;
@@ -46,7 +46,7 @@ export const Setting = memo(() => {
       dispatch(setDisabledAC(false));
     }
   };
-
+  // Изменение значений startValue
   const onClickHandlerSetStart = (value: number) => {
     if (Number.isNaN(value)) {
       return;
@@ -55,12 +55,12 @@ export const Setting = memo(() => {
       dispatch(setDisabledAC(false));
     }
   };
-
+  // Устаноовка стартоваго значения отсчёта счётчика
   const onClickHandlerSet = () => {
-    dispatch(setInLocalStorageTC());
+    dispatch(setCounterAC(startValue));
     dispatch(setDisabledAC(true));
   };
-
+  // Условие блокироки
   const isDisabled = startValue < 0 || maxValue < 0 || maxValue <= startValue || disabled;
 
   return (

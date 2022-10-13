@@ -13,7 +13,7 @@ export const Counter = memo(() => {
   const errorMaxValue = useSelector<AppRootStateType, string>((state) => state.counter.errorMaxValue);
   const supportingText = "enter values and press 'set'";
   const dispatch = useDispatch<AppThunkType>();
-  const counterClasses = counter === maxValue ? styles.countMax : styles.count;
+  const counterClasses = counter === maxValue && disabled ? styles.countMax : styles.count;
   return (
     <div className={styles.counter}>
       <div className={counterClasses}>
